@@ -1,0 +1,75 @@
+ANTLR4で四則演算
+2015/12/26
+
+Windows 7
+Eclipse 4.5.1
+ANTLR 4.5.1-1
+
+始めに：
+Listenerを用いる方法と、Visitorを用いる方法がある。
+ここではVisitorを使用
+
+参照：
+http://iwsttty.hatenablog.com/entry/2014/05/11/175728
+http://stackoverflow.com/questions/23092081/antlr4-visitor-pattern-on-simple-arithmetic-example
+https://docs.google.com/presentation/d/1XS_VIdicCQVonPK6AGYkWTp-3VeHfGuD2l8yNMpAfuQ
+
+
+(1)--------------------------
+
+
+g4ファイルからParser, Lexerなどを生成
+
+字句解析／構文解析クラスの作成に用いるjarは
+http://mvnrepository.com/artifact/org.antlr/antlr4
+などで取得できる
+
+rem Windows7, cmd
+java -classpath "C:\\antlr4-4.5.1-1.jar" ^
+ org.antlr.v4.Tool ^
+ -visitor ^
+ -no-listener ^
+ -o "C:\\outfolder" ^
+ -package com.example.antlr ^
+ "C:\\Expression.g4"
+
+
+(2)--------------------------
+
+
+Eclipseプロジェクトを作成
+File -> New -> Other -> Maven Project
+ Create a simple project
+ Group Id(パッケージ名に近い)、Artifact Id(プロジェクト名になる)を入力して完了
+
+pom.xml　にANTLR4 Runtimeを入れて Maven -> Update Project(Alt + F5)
+http://mvnrepository.com/artifact/org.antlr/antlr4-runtime
+　その他あれこれはpom.xmlを参照
+
+適当な場所に(1)で生成されたソースを追加
+
+
+(3)--------------------------
+
+
+com.example.antlr.EvalVisitor
+com.example.antlr.ExpressionErrorListener
+を作成
+
+EvalVisitor: 式を評価して返り値を返す
+ExpressionErrorListener: 構文エラーで例外を投げる
+
+
+(4)--------------------------
+
+
+デフォルトパッケージにEvaluatorを作成
+Run As -> Java Application
+
+
+(5)--------------------------
+
+
+JUnitテストケースを作成
+Run As -> JUnit Test
+
