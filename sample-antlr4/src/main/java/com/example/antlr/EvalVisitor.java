@@ -18,11 +18,16 @@ public class EvalVisitor extends ExpressionBaseVisitor<Long> {
 		long right = visit(ctx.right);
 		String op = ctx.op.getText();
 		switch (op.charAt(0)) {
-		case '*': return left * right;
-		case '/': return left / right;
-		case '+': return left + right;
-		case '-': return left - right;
-		default: throw new IllegalArgumentException("Unknown operator " + op);
+		case '*':
+			return left * right;
+		case '/':
+			return left / right;
+		case '+':
+			return left + right;
+		case '-':
+			return left - right;
+		default:
+			throw new IllegalArgumentException("Unknown operator " + op);
 		}
 	}
 
